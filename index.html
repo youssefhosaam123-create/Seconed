@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Valentine 💖</title>
+
+<style>
+:root {
+    --primary-color: #ff4f8b;
+    --secondary-color: #ffd1ea;
+    --glass-bg: rgba(255, 255, 255, 0.2);
+}
+
+*{box-sizing:border-box; margin:0; padding:0;}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #ffd1ea, #ff4f8b);
+    background-attachment: fixed;
+    text-align: center;
+    color: white;
+    overflow-x: hidden;
+    direction: rtl;
+}
+
+/* شاشة الدخول */
+#login {
+    position: fixed;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #ffb6d9, #ff2f75);
+    z-index: 100;
+    transition: 0.8s ease;
+}
+
+input {
+    padding: 15px;
+    border: none;
+    border-radius: 50px;
+    text-align: center;
+    width: 250px;
+    font-size: 16px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    outline: none;
+    color: #333;
+}
+
+button {
+    padding: 15px 40px;
+    border: none;
+    border-radius: 50px;
+    background: white;
+    color: #ff2f75;
+    font-weight: bold;
+    margin-top: 20px;
+    cursor: pointer;
+    font-size: 18px;
+    transition: 0.3s;
+}
+
+button:hover { transform: scale(1.05); }
+
+.hidden { opacity: 0; pointer-events: none; transform: translateY(-100%); }
+
+/* المحتوى */
+#content {
+    display: none;
+    padding: 40px 20px;
+    animation: fadeIn 1.5s ease;
+}
+
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+#counter {
+    font-size: 20px;
+    margin: 20px 0;
+    background: var(--glass-bg);
+    padding: 12px 25px;
+    border-radius: 50px;
+    display: inline-block;
+}
+
+.gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 15px;
+    margin: 30px auto;
+    max-width: 800px;
+}
+
+.gallery img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 15px;
+    border: 3px solid white;
+    transition: 0.4s;
+}
+
+.timeline {
+    margin: 40px auto;
+    max-width: 600px;
+    text-align: right;
+}
+
+.timeline-item {
+    background: var(--glass-bg);
+    margin-bottom: 15px;
+    padding: 15px;
+    border-radius: 15px;
+    border-right: 5px solid white;
+}
+
+.message-box {
+    background: white;
+    color: #ff2f75;
+    padding: 30px;
+    border-radius: 30px;
+    margin: 40px auto;
+    max-width: 600px;
+    min-height: 150px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    font-size: 1.2em;
+    line-height: 1.6;
+}
+
+#typing-text::after {
+    content: "|";
+    animation: blink 0.7s infinite;
+}
+
+@keyframes blink { 50% { opacity: 0; } }
+
+.heart {
+    position: fixed;
+    bottom: -20px;
+    animation: float 5s linear infinite;
+    z-index: 1;
+}
+
+@keyframes float {
+    from { transform: translateY(0) rotate(0deg); opacity: 1; }
+    to { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
+}
+</style>
+</head>
+<body>
+
+<audio id="bgMusic" src="Salmaa.m4a" loop></audio>
+
+<div id="login">
+    <h2 style="margin-bottom: 20px;">قولي الباسورد يا مزتي 💕</h2>
+    <input type="password" id="password" placeholder="كلمة السر">
+    <button onclick="checkPassword()">دخول 💖</button>
+    <p id="error" style="margin-top: 15px; color: #fff;"></p>
+</div>
+
+<div id="content">
+    <h1>happy valentine day ya mozty 💖</h1>
+    <div id="counter"></div>
+
+    <div class="gallery">
+        <img src="4.JPG"> <img src="6.JPG"> <img src="9.jpg">
+        <img src="1.JPG"> <img src="5.JPG"> <img src="3.jpg">
+        <img src="8.jpg"> <img src="10.jpeg"> <img src="7.JPG">
+        <img src="2.JPG"> 
+    </div>
+
+    <div class="timeline">
+        <h2 style="text-align: center; margin-bottom: 20px;">حكايتنا 📖</h2>
+        <div class="timeline-item">
+            <span style="font-weight:bold;">6-2-2025</span>
+            <p>Our movie is Zootopia 🦊🐰</p>
+        </div>
+        <div class="timeline-item">
+            <span style="font-weight:bold;">12-4-2025</span>
+            <p>The first picture of us 📸</p>
+        </div>
+        <div class="timeline-item">
+            <span style="font-weight:bold;">19-4-2025</span>
+            <p>The first I Love U from me ❤️</p>
+        </div>
+        <div class="timeline-item">
+            <span style="font-weight:bold;">2-5-2025</span>
+            <p>Our first date 🌹✨</p>
+        </div>
+    </div>
+
+    <div class="message-box">
+        <h3>رسالتي لكِ ❤️</h3><br>
+        <p id="typing-text"></p>
+    </div>
+</div>
+
+<script>
+const myMessage = "انا بحبك جدا ومش انهارده بس ولا بكره بس ولا حتى امبارح واول انا بحبك فكل وقت من اول ما عرفتك لحد ما اموت وعايزك معايا فكل حاجه فحياتي ومبسوط بوجودك معايا وعايزك تبقي عارفه انك الحاجه الوحيده الي انا عايش عشانها";
+
+function checkPassword(){
+    const password = document.getElementById("password").value.trim();
+    if(password === "1942025"){
+        const music = document.getElementById("bgMusic");
+        music.play().catch(e => console.log("Audio requires interaction"));
+
+        document.getElementById("login").classList.add("hidden");
+        setTimeout(()=>{
+            document.getElementById("login").style.display = "none";
+            document.getElementById("content").style.display = "block";
+            startCounter();
+            createHearts();
+            typeWriter(myMessage, "typing-text", 70); 
+        }, 800);
+    } else {
+        document.getElementById("error").innerText = "الباسورد غلط 😢 جربي تاني يا روحي";
+    }
+}
+
+function typeWriter(text, elementId, speed) {
+    let i = 0;
+    const element = document.getElementById(elementId);
+    function type() {
+        if (i < text.length) {
+            element.innerHTML += text.charAt(i);
+            i++;
+            setTimeout(type, speed);
+        }
+    }
+    type();
+}
+
+function startCounter(){
+    const startDate = new Date("2025-04-19T00:00:00");
+    const update = () => {
+        const now = new Date();
+        const diff = now - startDate;
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        document.getElementById("counter").innerText = "عدّى " + days + " يوم على حكايتنا الجميلة 💖";
+    };
+    update();
+}
+
+function createHearts(){
+    setInterval(()=>{
+        const heart = document.createElement("div");
+        heart.className = "heart";
+        heart.innerHTML = ["💗","❤️","✨","🌸"][Math.floor(Math.random()*4)];
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.fontSize = (Math.random() * 20 + 20) + "px";
+        document.body.appendChild(heart);
+        setTimeout(() => heart.remove(), 5000);
+    }, 450);
+}
+</script>
+
+</body>
+</html>
